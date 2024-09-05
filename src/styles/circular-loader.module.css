@@ -1,0 +1,37 @@
+.circle_loader_container {
+    width: 100%;
+    margin: 15px 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.circle_loader {
+    border: 5px solid var(--jb-border-4);
+    border-radius: 50px;
+    border-top: 5px solid var(--jb-highlight-dark);
+    width: 30px;
+    height: 30px;
+    -webkit-animation: spin 1.5s linear infinite;
+    animation: spin 1.5s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@-webkit-keyframes spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
+}
