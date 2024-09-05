@@ -1,11 +1,12 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, lazy, Suspense } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import { db } from '../indexedDB';
 import { forms } from '../constants';
 import { validateForm } from '../utils/formUtils';
-import Form from '../components/Form';
 import styles from '../styles/login.module.css';
+
+const Form = lazy(() => import('../components/Form'));
 
 const Login = () => {
 
@@ -125,18 +126,20 @@ const Login = () => {
                         className={styles.login_page_form_container}
                         onSubmit={handleFormSubmit}
                     >
-                        {
-                            formData.map((form) => (
-                                <Form
-                                    key={form.keyId}
-                                    form={form}
-                                    value={formInput[form.name]}
-                                    hasError={errorInput[form.name] ? true : false}
-                                    errorMessage={errorInput[form.name]}
-                                    handleInputChange={handleInputChange}
-                                />
-                            ))
-                        }
+                        <Suspense fallback={<div>Loading...</div>}>
+                            {
+                                formData.map((form) => (
+                                    <Form
+                                        key={form.keyId}
+                                        form={form}
+                                        value={formInput[form.name]}
+                                        hasError={errorInput[form.name] ? true : false}
+                                        errorMessage={errorInput[form.name]}
+                                        handleInputChange={handleInputChange}
+                                    />
+                                ))
+                            }
+                        </Suspense>
                         <button
                             type='submit'
                             disabled={isLoading}

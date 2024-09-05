@@ -1,8 +1,8 @@
 import { lazy, Suspense } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
+import AuthRoute from '../pages/AuthRoute';
+import LoginProtect from '../pages/LoginProtect';
 
-const AuthRoute = lazy(() => import('../pages/AuthRoute'));
-const LoginProtect = lazy(() => import('../pages/LoginProtect'));
 const Login = lazy(() => import('../pages/Login'));
 const JobsList = lazy(() => import('../pages/JobsList'));
 const JobsPost = lazy(() => import('../pages/JobsPost'));
@@ -12,31 +12,32 @@ const router = createBrowserRouter([
     {
         path: '/',
         element: (
-            <Suspense>
-                <LoginProtect>
+            <LoginProtect>
+                <Suspense fallback={<div>Loading...</div>}>
                     <Login />
-                </LoginProtect>
-            </Suspense>
+                </Suspense>
+            </LoginProtect>
         )
     },
     {
         path: '/freelancer/jobboard',
         element: (
-            <Suspense>
-                <AuthRoute requiredRole='freelancer'>
+            <AuthRoute requiredRole='freelancer'>
+                <Suspense fallback={<div>Loading...</div>}>
                     <JobsList />
-                </AuthRoute>
-            </Suspense>
+                </Suspense>
+            </AuthRoute>
         )
     },
     {
         path: '/employer/myjobs',
         element: (
-            <Suspense>
-                <AuthRoute requiredRole='employer'>
+            <AuthRoute requiredRole='employer'>
+                <Suspense fallback={<div>Loading...</div>}>
                     <JobsPost />
-                </AuthRoute>
-            </Suspense>
+                </Suspense>
+            </AuthRoute>
+
         )
     }
 ]);
