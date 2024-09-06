@@ -21,9 +21,9 @@ const LoginProtect = ({ children }) => {
     }
 
     const resetData = () => {
-        sessionStorage.setItem('isUserAuthenticated', false);
-        sessionStorage.setItem('loggedInUserRole', '');
-        sessionStorage.setItem('loggedInUserId', null);
+        sessionStorage.removeItem('isUserAuthenticated');
+        sessionStorage.removeItem('loggedInUserRole');
+        sessionStorage.removeItem('loggedInUserId');
     }
 
     const checkIsUserAuthenticated = () => {

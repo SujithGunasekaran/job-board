@@ -1,6 +1,8 @@
 import { useState, useEffect, lazy, Suspense } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { toast, ToastContainer } from 'react-toastify';
+import { updateLoggedInUser } from '../store/slice/userSlice';
 import { db } from '../indexedDB';
 import { forms } from '../constants';
 import { validateForm } from '../utils/formUtils';
@@ -16,6 +18,9 @@ const Login = () => {
     const [formInput, setFormInput] = useState({});
     const [errorInput, setErrorInput] = useState({});
     const [role, setRole] = useState('freelancer');
+
+    // dispatch
+    const dispatch = useDispatch();
 
     // navigate
     const navigate = useNavigate();
@@ -43,6 +48,7 @@ const Login = () => {
         sessionStorage.setItem('isUserAuthenticated', true);
         sessionStorage.setItem('loggedInUserRole', userInfo.role);
         sessionStorage.setItem('loggedInUserId', userInfo.id);
+        dispatch(updateLoggedInUser(userInfo));
         navigateToHome(role);
     }
 

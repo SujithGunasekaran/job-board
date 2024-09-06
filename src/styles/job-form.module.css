@@ -1,0 +1,15 @@
+.job_form_container {
+    margin: 0px 0px;
+}
+
+.job_form_submit_btn {
+    margin: 15px 0px;
+    border: none;
+    border-radius: 6px;
+    padding: 12px 0px;
+    width: 100%;
+    font-size: 17px;
+    color: var(--jb-white-5);
+    cursor: pointer;
+    background-color: var(--jb-highlight-dark);
+}

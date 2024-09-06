@@ -1,0 +1,7 @@
+.job_board_filter_wrapper {
+    display: flex;
+    width: 100%;
+    gap: 15px;
+    align-items: center;
+    flex-wrap: wrap;
+}

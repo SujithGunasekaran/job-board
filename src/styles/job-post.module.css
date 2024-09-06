@@ -1,0 +1,19 @@
+.job_post_wrapper {
+    padding: 45px 20px;
+    width: 100%;
+}
+
+.job_post_add_btn {
+    border: none;
+    cursor: pointer;
+    border-radius: 6px;
+    padding: 8px 15px;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--jb-white-5);
+    background-color: var(--jb-highlight-dark);
+}
+
+.job_post_list_wrapper {
+    margin: 25px 0px 0px 0px;
+}

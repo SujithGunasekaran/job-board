@@ -1,0 +1,12 @@
+.job_board_list_wrapper {
+    padding: 45px 20px;
+    width: 100%;
+}
+
+.job_list_pagination {
+    display: inline-block;
+}
+
+.job_board_filter_container {
+    margin: 5px 0px 20px 0px;
+}

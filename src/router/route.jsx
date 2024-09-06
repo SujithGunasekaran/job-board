@@ -6,6 +6,7 @@ import LoginProtect from '../pages/LoginProtect';
 const Login = lazy(() => import('../pages/Login'));
 const JobsList = lazy(() => import('../pages/JobsList'));
 const JobsPost = lazy(() => import('../pages/JobsPost'));
+const JobApplication = lazy(() => import('../pages/JobApplication'));
 
 
 const router = createBrowserRouter([
@@ -37,7 +38,16 @@ const router = createBrowserRouter([
                     <JobsPost />
                 </Suspense>
             </AuthRoute>
-
+        )
+    },
+    {
+        path: '/employer/myjob/:jobId',
+        element: (
+            <AuthRoute requiredRole='employer'>
+                <Suspense fallback={<div>Loading...</div>}>
+                    <JobApplication />
+                </Suspense>
+            </AuthRoute>
         )
     }
 ]);

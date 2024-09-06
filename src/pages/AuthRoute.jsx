@@ -1,13 +1,19 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import propTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
 import CircularLoader from '../components/Loader';
+import { updateLoggedInUser } from '../store/slice/userSlice';
+import { db } from '../indexedDB';
 
 const AuthRoute = ({ children, requiredRole }) => {
 
     // state
     const [isLoading, setIsLoading] = useState(true);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+    // dispatch
+    const dispatch = useDispatch();
 
     // navigate
     const navigate = useNavigate();
@@ -21,19 +27,25 @@ const AuthRoute = ({ children, requiredRole }) => {
     }
 
     const resetData = () => {
-        sessionStorage.setItem('isUserAuthenticated', false);
-        sessionStorage.setItem('loggedInUserRole', '');
-        sessionStorage.setItem('loggedInUserId', null);
+        sessionStorage.removeItem('isUserAuthenticated');
+        sessionStorage.removeItem('loggedInUserRole');
+        sessionStorage.removeItem('loggedInUserId');
     }
 
-    const checkIsUserAuthenticated = () => {
+    const checkIsUserAuthenticated = async () => {
         const isUserAuthenticated = sessionStorage.getItem('isUserAuthenticated');
         const userRole = sessionStorage.getItem('loggedInUserRole');
+        const userId = sessionStorage.getItem('loggedInUserId');
         if (isUserAuthenticated) {
             if (requiredRole !== userRole) {
                 navigateToHome(userRole);
                 return;
             }
+            let userInfo = null;
+            await db.users.where('id').equals(+userId).each(function (user) {
+                userInfo = user;
+            });
+            dispatch(updateLoggedInUser(userInfo));
             setIsLoading(false);
             setIsAuthenticated(true);
             return;
