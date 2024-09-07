@@ -1,0 +1,44 @@
+.job_application_wrapper {
+    padding: 45px 20px;
+    width: 100%;
+}
+
+.job_description {
+    padding: 15px 0px;
+}
+
+.job_application_go_back {
+    display: inline-block;
+    margin-bottom: 15px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.job_application_item {
+    margin: 15px 0px;
+    padding: 25px;
+    border-radius: 6px;
+    background-color: var(--jb-highlight-background);
+}
+
+.job_application_item_info_wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    margin: 15px 0px;
+}
+
+.job_application_item_info_title {
+    color: var(--jb-black-5);
+    font-size: 13px;
+}
+
+.job_application_item_info_description {
+    color: var(--jb-black-5);
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.job_application_pagination {
+    display: inline-block;
+}

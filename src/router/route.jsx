@@ -4,6 +4,8 @@ import AuthRoute from '../pages/AuthRoute';
 import LoginProtect from '../pages/LoginProtect';
 
 const Login = lazy(() => import('../pages/Login'));
+const FreelancerProfile = lazy(() => import('../pages/FreelancerProfile'));
+const EmployerProfile = lazy(() => import('../pages/EmployerProfile'));
 const JobsList = lazy(() => import('../pages/JobsList'));
 const JobsPost = lazy(() => import('../pages/JobsPost'));
 const JobApplication = lazy(() => import('../pages/JobApplication'));
@@ -31,6 +33,16 @@ const router = createBrowserRouter([
         )
     },
     {
+        path: '/freelancer/profile/:userId',
+        element: (
+            <AuthRoute requiredRole='freelancer'>
+                <Suspense fallback={<div>Loading...</div>}>
+                    <FreelancerProfile />
+                </Suspense>
+            </AuthRoute>
+        )
+    },
+    {
         path: '/employer/myjobs',
         element: (
             <AuthRoute requiredRole='employer'>
@@ -46,6 +58,16 @@ const router = createBrowserRouter([
             <AuthRoute requiredRole='employer'>
                 <Suspense fallback={<div>Loading...</div>}>
                     <JobApplication />
+                </Suspense>
+            </AuthRoute>
+        )
+    },
+    {
+        path: '/employer/profile/:userId',
+        element: (
+            <AuthRoute requiredRole='employer'>
+                <Suspense fallback={<div>Loading...</div>}>
+                    <EmployerProfile />
                 </Suspense>
             </AuthRoute>
         )

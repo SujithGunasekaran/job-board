@@ -124,6 +124,69 @@ export const jobPostForm = [
         isRequired: true,
         errorMessage: 'Please Enter Salary',
     }
+];
+
+export const freelancerProfileForm = [
+    {
+        keyId: '1',
+        type: 'text',
+        id: 'email',
+        name: 'email',
+        displayName: 'Email',
+        placeHolder: 'Email Address',
+        validationType: 'regex',
+        regex: new RegExp(/^[a-z0-9]+@[a-z]+\.[a-z]{2,3}$/),
+        isRequired: true,
+        inValidError: 'Enter Valid Email Address',
+        errorMessage: 'Please Enter Email Address',
+    },
+    {
+        keyId: '2',
+        type: 'multiSelect',
+        id: 'skills',
+        name: 'skills',
+        displayName: 'Skills',
+        validationType: 'emptyArray',
+        isRequired: true,
+        errorMessage: 'Please Select Skills',
+        multiSelectIsObject: false,
+        multiSelectOptions: [
+            'Javascript',
+            'React.js',
+            'Vue.js',
+            'Express.js',
+            'Node.js',
+            'Java',
+            'Python'
+        ],
+    },
+    {
+        keyId: '3',
+        type: 'text',
+        id: 'github_username',
+        name: 'github_username',
+        displayName: 'Github UserName',
+        placeHolder: 'Enter Github UserName',
+        validationType: 'emptyString',
+        isRequired: true,
+        errorMessage: 'Please Enter Github UserName',
+    }
+];
+
+export const employerProfileForm = [
+    {
+        keyId: '1',
+        type: 'text',
+        id: 'email',
+        name: 'email',
+        displayName: 'Email',
+        placeHolder: 'Email Address',
+        validationType: 'regex',
+        regex: new RegExp(/^[a-z0-9]+@[a-z]+\.[a-z]{2,3}$/),
+        isRequired: true,
+        inValidError: 'Enter Valid Email Address',
+        errorMessage: 'Please Enter Email Address',
+    }
 ]
 
 export const forms = {

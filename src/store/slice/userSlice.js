@@ -10,8 +10,8 @@ const userSlice = createSlice({
     initialState,
     reducers: {
         updateLoggedInUser: (state, action) => {
-            state.loggedInUser = action.payload
-        }
+            state.loggedInUser = action?.payload ?? {}
+        },
     }
 });
 

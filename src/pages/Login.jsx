@@ -68,10 +68,13 @@ const Login = () => {
                     userInfo = user;
                 });
             }
+            if (userInfo.role !== role) {
+                throw new Error('Invalid userName or Password');
+            }
             setUserInfoToStore(userInfo, role);
         } catch (error) {
             console.error('login error', error);
-            toast.error('Failed to login! valid Username or Password')
+            toast.error('Failed to login! valid Username or Password');
         } finally {
             setIsLoading(false);
         }

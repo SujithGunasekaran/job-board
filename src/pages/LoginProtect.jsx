@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import propTypes from 'prop-types';
 import CircularLoader from '../components/Loader';
+import { resetUserSession } from '../utils/sessionUtils';
 
 const LoginProtect = ({ children }) => {
 
@@ -20,12 +21,6 @@ const LoginProtect = ({ children }) => {
         }
     }
 
-    const resetData = () => {
-        sessionStorage.removeItem('isUserAuthenticated');
-        sessionStorage.removeItem('loggedInUserRole');
-        sessionStorage.removeItem('loggedInUserId');
-    }
-
     const checkIsUserAuthenticated = () => {
         const isUserAuthenticated = sessionStorage.getItem('isUserAuthenticated');
         const userRole = sessionStorage.getItem('loggedInUserRole');
@@ -33,7 +28,7 @@ const LoginProtect = ({ children }) => {
             navigateToHome(userRole);
             return;
         }
-        resetData();
+        resetUserSession();
         setIsLoading(false);
         setIsAuthenticated(false);
     }

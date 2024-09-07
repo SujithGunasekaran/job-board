@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import CircularLoader from '../components/Loader';
 import { updateLoggedInUser } from '../store/slice/userSlice';
 import { db } from '../indexedDB';
+import { resetUserSession } from '../utils/sessionUtils';
 
 const AuthRoute = ({ children, requiredRole }) => {
 
@@ -26,12 +27,6 @@ const AuthRoute = ({ children, requiredRole }) => {
         }
     }
 
-    const resetData = () => {
-        sessionStorage.removeItem('isUserAuthenticated');
-        sessionStorage.removeItem('loggedInUserRole');
-        sessionStorage.removeItem('loggedInUserId');
-    }
-
     const checkIsUserAuthenticated = async () => {
         const isUserAuthenticated = sessionStorage.getItem('isUserAuthenticated');
         const userRole = sessionStorage.getItem('loggedInUserRole');
@@ -50,7 +45,7 @@ const AuthRoute = ({ children, requiredRole }) => {
             setIsAuthenticated(true);
             return;
         }
-        resetData();
+        resetUserSession();
         navigate('/');
     }
 

@@ -2,7 +2,7 @@ import { useState, lazy, Suspense } from 'react';
 import { useSelector } from 'react-redux';
 import { useLiveQuery } from "dexie-react-hooks";
 import Header from "../components/Header";
-import JobBoardItem from '../components/JobBoardItem';
+import EmployerJobItems from '../components/EmployerJobItems';
 import Modal from '../components/Modal';
 import { db } from '../indexedDB';
 import styles from '../styles/job-post.module.css';
@@ -12,7 +12,7 @@ const JobForm = lazy(() => import('../components/JobForm'));
 const JobsPosts = () => {
 
     // selector
-    const { loggedInUser } = useSelector((store) => store.userReducer);
+    const { loggedInUser = {} } = useSelector((store) => store.userReducer);
 
     // state
     const [showModal, setShowModal] = useState(false);
@@ -49,18 +49,10 @@ const JobsPosts = () => {
                     {
                         (jobPosts && jobPosts.length) > 0 ?
                             jobPosts.map((job, index) => (
-                                <JobBoardItem
+                                <EmployerJobItems
                                     key={`${job.id}_${index}`}
-                                    title={job.job_title}
-                                    description={job.job_description}
-                                    requirements={job.job_requirements}
-                                    companyName={job.job_company_name}
-                                    contactInfo={job.job_contact_info}
-                                    salary={job.job_salary_per_hour}
-                                    pageUrl={`/employer/myjob/${job.id}`}
-                                    linkText='View Applications >'
-                                    showApplyButton={false}
-                                    showLink={true}
+                                    job={job}
+                                    loggedInUser={loggedInUser}
                                 />
                             ))
                             : <div>No Job Poster</div>

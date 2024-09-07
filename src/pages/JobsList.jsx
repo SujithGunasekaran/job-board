@@ -1,14 +1,18 @@
 import { useState, useEffect, useMemo, lazy, Suspense } from 'react';
+import { useSelector } from 'react-redux';
+import { ToastContainer } from 'react-toastify';
 import Header from "../components/Header";
 import JobFilter from '../components/JobFilter';
-import JobBoardItem from '../components/JobBoardItem';
+import FreelanceJobItem from '../components/FreelanceJobItems';
 import jobBoard from '../jobBoard.json';
+import { db } from '../indexedDB';
 import styles from '../styles/job-board.module.css';
 
 const Pagination = lazy(() => import('../components/Pagination'));
 
 const JobsList = () => {
 
+    // state
     const [jobList, setJobList] = useState([]);
     const [selectedFilter, setSelectedFilter] = useState({
         skill: '',
@@ -16,6 +20,9 @@ const JobsList = () => {
     });
     const [currentPage, setCurrentPage] = useState(1);
     const [pagePerItem] = useState(10);
+
+    // selector
+    const { loggedInUser } = useSelector((store) => store.userReducer);
 
     const selectedPage = (currentPageNumber) => {
         setCurrentPage(currentPageNumber);
@@ -32,17 +39,22 @@ const JobsList = () => {
         });
     }
 
-    useEffect(() => {
-        /**
-         * If we are dealing with large set of data.
-         * We can actually use the webWorker to perform this task.
-         * Which will not block the UI interaction.
-        */
-        let jobList = [...jobBoard];
+    const fetchPostedJob = () => {
+        return db.jobposts.toArray();
+    }
+
+    const updateJobList = async () => {
+        const postedJobs = await fetchPostedJob();
+        let jobList = [
+            ...postedJobs,
+            ...jobBoard,
+        ];
         setCurrentPage(1);
         Object.entries(selectedFilter).forEach(([key, value]) => {
             if (key === 'skill' && value) {
-                jobList = jobList.filter((job) => job.job_requirements.includes(value));
+                jobList = jobList.filter(
+                    (job) => job.job_requirements.toLowerCase().includes(value)
+                );
             }
             else if (key === 'sort' && value) {
                 jobList.sort(
@@ -52,6 +64,15 @@ const JobsList = () => {
             }
         });
         setJobList(jobList);
+    }
+
+    useEffect(() => {
+        /**
+         * If we are dealing with large set of data.
+         * We can actually use the webWorker to perform this task.
+         * Which will not block the UI interaction.
+        */
+        updateJobList();
     }, [selectedFilter])
 
     const jobs = useMemo(() => {
@@ -73,15 +94,10 @@ const JobsList = () => {
                 {
                     jobs.length > 0 ?
                         jobs.map((job, index) => (
-                            <JobBoardItem
+                            <FreelanceJobItem
                                 key={`${job.id}_${index}`}
-                                title={job.job_title}
-                                description={job.job_description}
-                                requirements={job.job_requirements}
-                                companyName={job.job_company_name}
-                                contactInfo={job.job_contact_info}
-                                salary={job.job_salary_per_hour}
-                                showApplyButton={true}
+                                job={job}
+                                loggedInUser={loggedInUser}
                             />
                         ))
                         : <div>No jobs are available...</div>
@@ -101,6 +117,9 @@ const JobsList = () => {
                     }
                 </Suspense>
             </div>
+            <ToastContainer
+                position="top-center"
+            />
         </>
     )
 }

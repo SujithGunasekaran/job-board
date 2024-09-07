@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { toast, ToastContainer } from 'react-toastify';
 import propsType from 'prop-types';
 import Form from './Form';
 import { db } from '../indexedDB';
@@ -31,18 +32,23 @@ const JobForm = (props) => {
     }
 
     const handleFormSubmit = async (event) => {
-        event.preventDefault();
-        const { isValidForm, errorData = {} } = validateForm(jobPostForm, formInput);
-        setErrorInput(errorData);
-        if (!isValidForm) {
-            return;
+        try {
+            event.preventDefault();
+            const { isValidForm, errorData = {} } = validateForm(jobPostForm, formInput);
+            setErrorInput(errorData);
+            if (!isValidForm) {
+                return;
+            }
+            await db.jobposts.add({
+                ...formInput,
+                userid: loggedInUser.id,
+                application_count: 0,
+            });
+            refetchJobPost();
+        } catch (error) {
+            console.error('post for error', error);
+            toast.error('Failed to post the job');
         }
-        await db.jobposts.add({
-            ...formInput,
-            userid: loggedInUser.id,
-            application_count: 0,
-        });
-        refetchJobPost();
     }
 
     const initiateFormInput = () => {
@@ -61,30 +67,35 @@ const JobForm = (props) => {
     }, [])
 
     return (
-        <form
-            className={styles.job_form_container}
-            onSubmit={handleFormSubmit}
-        >
-            {
-                formInput &&
-                <>
-                    {
-                        jobPostForm.map((form) => (
-                            <Form
-                                key={form.keyId}
-                                form={form}
-                                value={formInput[form.name]}
-                                hasError={errorInput[form.name] ? true : false}
-                                errorMessage={errorInput[form.name]}
-                                handleInputChange={handleInputChange}
-                            />
-                        ))
-                    }
-                    <button type='submit' className={styles.job_form_submit_btn}>Post</button>
-                </>
-            }
+        <>
+            <form
+                className={styles.job_form_container}
+                onSubmit={handleFormSubmit}
+            >
+                {
+                    formInput &&
+                    <>
+                        {
+                            jobPostForm.map((form) => (
+                                <Form
+                                    key={form.keyId}
+                                    form={form}
+                                    value={formInput[form.name]}
+                                    hasError={errorInput[form.name] ? true : false}
+                                    errorMessage={errorInput[form.name]}
+                                    handleInputChange={handleInputChange}
+                                />
+                            ))
+                        }
+                        <button type='submit' className={styles.job_form_submit_btn}>Post</button>
+                    </>
+                }
 
-        </form>
+            </form>
+            <ToastContainer
+                position="top-center"
+            />
+        </>
     )
 }
 

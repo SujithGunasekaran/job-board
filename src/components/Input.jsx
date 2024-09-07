@@ -12,7 +12,7 @@ const Input = (props) => {
         hasError,
         errorMessage,
         displayName,
-        placeholder,
+        placeHolder,
         inputClass,
         labelClass,
         errorClass,
@@ -33,7 +33,7 @@ const Input = (props) => {
                 type={type}
                 name={name}
                 value={value}
-                placeholder={placeholder}
+                placeholder={placeHolder}
                 className={inputClass}
                 onChange={onChange}
             />
@@ -51,7 +51,7 @@ Input.propTypes = {
     hasError: propTypes.bool,
     errorMessage: propTypes.string,
     displayName: propTypes.string,
-    placeholder: propTypes.string,
+    placeHolder: propTypes.string,
     inputClass: propTypes.string,
     labelClass: propTypes.string,
     errorClass: propTypes.string,

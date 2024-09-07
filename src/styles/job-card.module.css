@@ -13,6 +13,10 @@
     justify-content: space-between;
 }
 
+.job_card_info_wrapper {
+    width: 75vw;
+}
+
 .job_card_title {
     font-size: 25px;
     color: var(--jb-black-5);
@@ -61,8 +65,14 @@
     font-size: 16px;
     font-weight: 600;
     border-radius: 6px;
+    cursor: pointer;
     color: var(--jb-white-5);
     background-color: var(--jb-highlight-dark);
+}
+
+.job_apply_btn:disabled {
+    cursor: not-allowed;
+    background-color: var(--jb-btn-disabled);
 }
 
 @media screen and (max-width: 900px) {

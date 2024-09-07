@@ -1,6 +1,8 @@
 
 const isEmptyValue = (value) => !value;
 
+const isEmptyArray = (value) => !Array.isArray(value) || value.length === 0;
+
 const validateRegex = (regex = null, value = null) => {
     if (isEmptyValue(value)) {
         return { isEmpty: true, isInValid: false };
@@ -25,6 +27,11 @@ export const validateForm = (formKeyList = [], formObject = {}) => {
                         ...errorData,
                         [formKey.name]: formKey.inValidError
                     };
+                }
+            } else if (formKey.validationType === 'emptyArray') {
+                let isValid = !isEmptyArray(formObject[formKey.name]);
+                if (!isValid) {
+                    errorData = { ...errorData, [formKey.name]: formKey.errorMessage };
                 }
             } else {
                 let isValid = !isEmptyValue(formObject[formKey.name]);

@@ -1,0 +1,32 @@
+.profile_wrapper {
+    padding: 45px 20px;
+    max-width: 1550px;
+    min-height: 100vh;
+    margin: 0px auto;
+}
+
+.profile_go_back {
+    display: inline-block;
+    margin-bottom: 15px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.profile_content_wrapper {
+    margin: 20px 0px;
+    max-width: 500px;
+    margin: 0px auto;
+}
+
+
+.profile_submit_btn {
+    margin: 15px 0px;
+    border: none;
+    border-radius: 6px;
+    padding: 12px 0px;
+    width: 100%;
+    font-size: 17px;
+    color: var(--jb-white-5);
+    cursor: pointer;
+    background-color: var(--jb-highlight-dark);
+}

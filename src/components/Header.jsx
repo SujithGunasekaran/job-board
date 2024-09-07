@@ -1,6 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateLoggedInUser } from '../store/slice/userSlice';
+import { resetUserSession } from '../utils/sessionUtils';
 import styles from '../styles/header.module.css';
 
 const Header = () => {
@@ -12,22 +13,19 @@ const Header = () => {
     const dispatch = useDispatch();
 
     // selector
-    const { loggedInUser } = useSelector((store) => store.userReducer);
+    const { loggedInUser = {} } = useSelector((store) => store.userReducer);
 
     const logoutUser = () => {
-        sessionStorage.removeItem('isUserAuthenticated', false);
-        sessionStorage.removeItem('loggedInUserId', null);
-        sessionStorage.removeItem('loggedInUserRole', null);
+        resetUserSession();
         dispatch(updateLoggedInUser({}));
         navigate('/');
     }
 
     const getProfileLink = () => {
-        const { role, id } = loggedInUser;
-        if (role === 'freelancer') {
-            return `/freelancer/profile/${id}`;
-        } else if (role === 'employer') {
-            return `/employer/profile/${id}`;
+        if (loggedInUser?.role === 'freelancer') {
+            return `/freelancer/profile/${loggedInUser?.id}`;
+        } else if (loggedInUser?.role === 'employer') {
+            return `/employer/profile/${loggedInUser?.id}`;
         } else {
             logoutUser();
         }

@@ -1,6 +1,8 @@
 .job_board_list_wrapper {
     padding: 45px 20px;
-    width: 100%;
+    max-width: 1550px;
+    min-height: 100vh;
+    margin: 0px auto;
 }
 
 .job_list_pagination {

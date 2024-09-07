@@ -12,6 +12,7 @@ const Form = (props) => {
         hasError,
         errorMessage,
         handleInputChange,
+        onMultiSelectChange,
     } = props;
 
     const FieldComponent = formFields[form.type];
@@ -21,15 +22,12 @@ const Form = (props) => {
             {
                 <FieldComponent
                     key={form.id}
-                    type={form.type}
-                    id={form.id}
-                    name={form.name}
-                    displayName={form.displayName}
-                    placeholder={form.placeHolder}
+                    {...form}
                     value={value}
                     hasError={hasError}
                     errorMessage={errorMessage}
                     onChange={handleInputChange}
+                    onMultiSelectChange={onMultiSelectChange}
                     labelClass={styles.login_form_input_title}
                     errorClass={styles.login_form_input_error}
                     inputClass={`${styles.login_page_form_input} ${hasError ? styles.error : ''}`}
@@ -41,9 +39,10 @@ const Form = (props) => {
 
 Form.propTypes = {
     form: propTypes.object,
-    value: propTypes.string,
+    value: propTypes.any,
     hasError: propTypes.bool,
     errorMessage: propTypes.string,
+    onMultiSelectChange: propTypes.func,
     handleInputChange: propTypes.func,
 };
 
