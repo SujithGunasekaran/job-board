@@ -11,11 +11,15 @@ const Form = (props) => {
         value,
         hasError,
         errorMessage,
+        asyncMultiSelect,
         handleInputChange,
         onMultiSelectChange,
     } = props;
 
     const FieldComponent = formFields[form.type];
+
+    const multiSelectOptions = form.multiSelectOptions ? form.multiSelectOptions :
+        asyncMultiSelect?.[form.name] ?? [];
 
     return (
         <Fragment>
@@ -23,6 +27,7 @@ const Form = (props) => {
                 <FieldComponent
                     key={form.id}
                     {...form}
+                    multiSelectOptions={multiSelectOptions}
                     value={value}
                     hasError={hasError}
                     errorMessage={errorMessage}
@@ -41,6 +46,7 @@ Form.propTypes = {
     form: propTypes.object,
     value: propTypes.any,
     hasError: propTypes.bool,
+    asyncMultiSelect: propTypes.object,
     errorMessage: propTypes.string,
     onMultiSelectChange: propTypes.func,
     handleInputChange: propTypes.func,

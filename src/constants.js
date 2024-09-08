@@ -170,7 +170,20 @@ export const freelancerProfileForm = [
         validationType: 'emptyString',
         isRequired: true,
         errorMessage: 'Please Enter Github UserName',
-    }
+    },
+    {
+        keyId: '4',
+        type: 'multiSelect',
+        id: 'github_project',
+        name: 'github_project',
+        displayName: 'Github Projects',
+        placeHolder: 'Verify Github user',
+        validationType: 'emptyArray',
+        isRequired: false,
+        errorMessage: 'Please Select Github Projects',
+        multiSelectIsObject: false,
+        multiSelectOptions: null,
+    },
 ];
 
 export const employerProfileForm = [

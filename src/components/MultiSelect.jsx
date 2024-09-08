@@ -9,6 +9,7 @@ const MultiSelect = (props) => {
         inputClass,
         displayName,
         labelClass,
+        placeHolder,
         errorClass,
         hasError,
         errorMessage,
@@ -31,6 +32,7 @@ const MultiSelect = (props) => {
                 onRemove={(value) => onMultiSelectChange(name, value)}
                 onSelect={(value) => onMultiSelectChange(name, value)}
                 options={multiSelectOptions}
+                placeholder={placeHolder}
                 className={inputClass}
             />
             {hasError && <p className={errorClass}>{errorMessage}</p>}
@@ -42,6 +44,7 @@ MultiSelect.propTypes = {
     name: propsType.string,
     value: propsType.array,
     hasError: propsType.bool,
+    placeHolder: propsType.string,
     errorClass: propsType.string,
     errorMessage: propsType.string,
     multiSelectIsObject: propsType.bool,

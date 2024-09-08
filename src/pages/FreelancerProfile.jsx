@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { toast, ToastContainer } from 'react-toastify';
 import { Link, useParams } from 'react-router-dom';
 import { freelancerProfileForm } from '../constants';
+import useDebounce from '../hooks/useDebounce';
 import { db } from '../indexedDB';
 import Form from '../components/Form';
 import Header from "../components/Header";
@@ -20,6 +21,10 @@ const FreelancerProfile = () => {
     // state
     const [formInput, setFormInput] = useState(null);
     const [errorInput, setErrorInput] = useState({});
+    const [asyncMultiSelect, setAsyncMultiSelect] = useState({});
+
+    // hooks
+    const githubDebounceValue = useDebounce(formInput?.github_username ?? '', 300);
 
     const fetchUserData = () => {
         return db.users.where({ id: +userId }).first()
@@ -39,6 +44,7 @@ const FreelancerProfile = () => {
     const handleFormSubmit = async (event) => {
         try {
             event.preventDefault();
+            console.log('check - 1', formInput);
             const { isValidForm, errorData = {} } = validateForm(freelancerProfileForm, formInput);
             setErrorInput(errorData);
             if (!isValidForm) {
@@ -47,7 +53,9 @@ const FreelancerProfile = () => {
             await db.users.update(+loggedInUser.id, {
                 email: formInput.email,
                 github_username: formInput.github_username,
-                skills: formInput.skills.join(', ')
+                skills: formInput.skills.join(', '),
+                github_project: formInput.github_project.length > 0 ?
+                    formInput.github_project.join(', ') : '',
             });
             initiateFormInput();
             toast.success('Profile Information Updated Successfully');
@@ -60,11 +68,12 @@ const FreelancerProfile = () => {
     const initiateFormInput = async () => {
         const userData = await fetchUserData();
         let formInput = {};
+        console.log('check - 2', userData);
         freelancerProfileForm.forEach((input) => {
-            if (input.name === 'skills') {
+            if (input.name === 'skills' || input.name === 'github_project') {
                 formInput = {
                     ...formInput,
-                    [input.name]: userData?.[input.name].split(', ') ?? []
+                    [input.name]: userData?.[input.name] ? userData[input.name].split(', ') : []
                 }
             } else {
                 formInput = {
@@ -73,6 +82,7 @@ const FreelancerProfile = () => {
                 }
             }
         });
+        console.log('check - 1', formInput);
         setFormInput(formInput);
     }
 
@@ -85,6 +95,31 @@ const FreelancerProfile = () => {
             return newState;
         });
     }
+
+    const fetchGithubProject = async () => {
+        try {
+            const response = await fetch(`https://api.github.com/users/${githubDebounceValue}/repos`);
+            const responseData = await response.json();
+            let projectName = responseData.map((data) => data.name);
+            setAsyncMultiSelect((prevState) => {
+                let newState = {
+                    ...prevState,
+                    github_project: projectName
+                }
+                return newState;
+            });
+        } catch (error) {
+            console.error('github project error', error);
+            toast.error('Failed to fetch gitub projects');
+        }
+    }
+
+    useEffect(() => {
+        if (githubDebounceValue) {
+            fetchGithubProject();
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [githubDebounceValue]);
 
     useEffect(() => {
         initiateFormInput();
@@ -113,6 +148,7 @@ const FreelancerProfile = () => {
                                     key={form.keyId}
                                     form={form}
                                     value={formInput[form.name]}
+                                    asyncMultiSelect={asyncMultiSelect}
                                     hasError={errorInput[form.name] ? true : false}
                                     errorMessage={errorInput[form.name]}
                                     handleInputChange={handleInputChange}
