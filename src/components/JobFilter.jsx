@@ -1,5 +1,5 @@
 import propTypes from 'prop-types';
-import Select from './Select';
+import Select from './InputComponents/Select';
 import { jobBoardFilterOptions, jobBoardSortOptions } from '../constants';
 import styles from '../styles/job-board-filter.module.css';
 

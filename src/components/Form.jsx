@@ -33,9 +33,10 @@ const Form = (props) => {
                     errorMessage={errorMessage}
                     onChange={handleInputChange}
                     onMultiSelectChange={onMultiSelectChange}
-                    labelClass={styles.login_form_input_title}
-                    errorClass={styles.login_form_input_error}
-                    inputClass={`${styles.login_page_form_input} ${hasError ? styles.error : ''}`}
+                    labelClass={styles.form_form_input_title}
+                    errorClass={styles.form_form_input_error}
+                    inputClass={`${styles.form_page_form_input} ${hasError ? styles.error : ''}`}
+                    textAreaClass={`${styles.form_page_form_textarea} ${hasError ? styles.error : ''}`}
                 />
             }
         </Fragment>
