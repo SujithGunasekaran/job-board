@@ -16,8 +16,8 @@
   --jb-error-color: rgb(171, 3, 3);
 }
 
-
 * {
   box-sizing: border-box;
   margin: 0px;
+  transition: 0.3s all ease-in-out;
 }

@@ -44,7 +44,6 @@ const FreelancerProfile = () => {
     const handleFormSubmit = async (event) => {
         try {
             event.preventDefault();
-            console.log('check - 1', formInput);
             const { isValidForm, errorData = {} } = validateForm(freelancerProfileForm, formInput);
             setErrorInput(errorData);
             if (!isValidForm) {
@@ -68,7 +67,6 @@ const FreelancerProfile = () => {
     const initiateFormInput = async () => {
         const userData = await fetchUserData();
         let formInput = {};
-        console.log('check - 2', userData);
         freelancerProfileForm.forEach((input) => {
             if (input.name === 'skills' || input.name === 'github_project') {
                 formInput = {
@@ -82,7 +80,6 @@ const FreelancerProfile = () => {
                 }
             }
         });
-        console.log('check - 1', formInput);
         setFormInput(formInput);
     }
 

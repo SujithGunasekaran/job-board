@@ -2,6 +2,7 @@ import { useState, useEffect, lazy, Suspense } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { toast, ToastContainer } from 'react-toastify';
+import Header from '../components/Header';
 import { updateLoggedInUser } from '../store/slice/userSlice';
 import { db } from '../indexedDB';
 import { forms } from '../constants';
@@ -114,6 +115,7 @@ const Login = () => {
 
     return (
         <>
+            <Header />
             <div className={styles.login_page_container}>
                 <div className={styles.login_page_wrapper}>
                     <h1 className={styles.login_page_header}>Login</h1>

@@ -34,10 +34,13 @@ const Header = () => {
     return (
         <div className={styles.header_container}>
             <h1 className={styles.header_title}>Job Board</h1>
-            <div className={styles.header_right_panel_container}>
-                <Link to={getProfileLink()} className={styles.header_right_panel_link}>Profile</Link>
-                <button onClick={logoutUser} className={styles.header_right_panel_logout}>Logout</button>
-            </div>
+            {
+                Object.keys(loggedInUser).length > 0 &&
+                <div className={styles.header_right_panel_container}>
+                    <Link to={getProfileLink()} className={styles.header_right_panel_link}>Profile</Link>
+                    <button onClick={logoutUser} className={styles.header_right_panel_logout}>Logout</button>
+                </div>
+            }
         </div>
     )
 }
