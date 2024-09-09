@@ -1,5 +1,5 @@
-/* eslint-disable no-undef */
 import '@testing-library/jest-dom';
+import { expect, describe, vi, test } from 'vitest';
 import { Provider } from 'react-redux';
 import { MemoryRouter, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -7,17 +7,14 @@ import store from '../../store';
 import { render, fireEvent, screen, waitFor } from "@testing-library/react";
 import Login from '../Login';
 import { db } from '../../indexedDB';
-import { expect } from 'vitest';
 
 vi.mock('../../indexedDB', () => ({
     db: {
         users: {
             add: vi.fn(),
             where: vi.fn().mockReturnValue({
-                where: vi.fn().mockReturnValue({
-                    equals: vi.fn(),
-                    each: vi.fn(),
-                }),
+                equals: vi.fn(),
+                each: vi.fn(),
             })
         }
     }
@@ -37,7 +34,7 @@ vi.mock('react-toastify', async () => {
             error: vi.fn()
         }
     };
-})
+});
 
 
 const renderApp = () => {
@@ -51,7 +48,7 @@ const renderApp = () => {
     );
 };
 
-describe("Counter", () => {
+describe("Login", () => {
 
     test("should render Login component", async () => {
         renderApp();
@@ -87,8 +84,8 @@ describe("Counter", () => {
         const submitButton = await screen.getByRole('button', { name: /Login/i });
 
         await waitFor(() => {
-            fireEvent.change(emailInput, { target: { value: 'test@example.com' } });
-            fireEvent.change(passwordInput, { target: { value: 'password123' } });
+            fireEvent.change(emailInput, { target: { value: 'test@example.com', name: 'email' } });
+            fireEvent.change(passwordInput, { target: { value: 'password123', email: 'password' } });
             fireEvent.click(submitButton);
         });
         expect(navigate.mock.calls[0][0]).toBe('/freelancer/jobboard');
@@ -123,8 +120,8 @@ describe("Counter", () => {
         const submitButton = screen.getByRole('button', { name: /Login/i });
 
         await waitFor(() => {
-            fireEvent.change(emailInput, { target: { value: 'test@example.com' } });
-            fireEvent.change(passwordInput, { target: { value: 'password123' } });
+            fireEvent.change(emailInput, { target: { value: 'test@example.com', name: 'email' } });
+            fireEvent.change(passwordInput, { target: { value: 'password123', name: 'password' } });
             fireEvent.click(submitButton);
         });
         expect(navigate.mock.calls[0][0]).toBe('/employer/myjobs');
@@ -199,8 +196,8 @@ describe("Counter", () => {
         const submitButton = screen.getByRole('button', { name: /Login/i });
 
         await waitFor(() => {
-            fireEvent.change(emailInput, { target: { value: 'test@example.com' } });
-            fireEvent.change(passwordInput, { target: { value: 'password123' } });
+            fireEvent.change(emailInput, { target: { value: 'test@example.com', name: 'email' } });
+            fireEvent.change(passwordInput, { target: { value: 'password123', name: 'password' } });
             fireEvent.click(submitButton);
         });
 
@@ -223,8 +220,8 @@ describe("Counter", () => {
         const submitButton = screen.getByRole('button', { name: /Login/i });
 
         await waitFor(() => {
-            fireEvent.change(emailInput, { target: { value: '' } });
-            fireEvent.change(passwordInput, { target: { value: 'password123' } });
+            fireEvent.change(emailInput, { target: { value: '', name: 'email' } });
+            fireEvent.change(passwordInput, { target: { value: 'password123', name: 'password' } });
             fireEvent.click(submitButton);
         });
 
@@ -249,8 +246,8 @@ describe("Counter", () => {
         const submitButton = screen.getByRole('button', { name: /Login/i });
 
         await waitFor(() => {
-            fireEvent.change(emailInput, { target: { value: 'asdasd' } });
-            fireEvent.change(passwordInput, { target: { value: 'password123' } });
+            fireEvent.change(emailInput, { target: { value: 'asdasd', name: 'email' } });
+            fireEvent.change(passwordInput, { target: { value: 'password123', name: 'password' } });
             fireEvent.click(submitButton);
         });
 

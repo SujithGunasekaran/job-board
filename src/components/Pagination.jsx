@@ -73,6 +73,7 @@ const Pagination = (props) => {
             if (i > totalPage) continue;
             itemList.push(
                 <div
+                    data-testid={i}
                     className={`${styles.pagination_number} ${currentPage === (i) ? styles.active : ''}`}
                     key={i}
                     onClick={() => handlePageNumberClick(i)}

@@ -15,9 +15,9 @@ const JobFilter = (props) => {
     return (
         <div className={styles.job_board_filter_wrapper}>
             <div>
-                Filter By:
                 <Select
                     name='skill'
+                    displayName='Filter By:'
                     value={selectedFilterValue?.skill ?? ''}
                     emptyPlaceholder='Select skill'
                     options={jobBoardFilterOptions}
@@ -25,9 +25,9 @@ const JobFilter = (props) => {
                 />
             </div>
             <div>
-                Sort by:
                 <Select
                     name='sort'
+                    displayName='Sort By:'
                     value={selectedFilterValue?.sort ?? ''}
                     emptyPlaceholder='Select sort'
                     options={jobBoardSortOptions}
