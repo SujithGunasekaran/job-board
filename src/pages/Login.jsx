@@ -118,7 +118,7 @@ const Login = () => {
             <Header />
             <div className={styles.login_page_container}>
                 <div className={styles.login_page_wrapper}>
-                    <h1 className={styles.login_page_header}>Login</h1>
+                    <h2 className={styles.login_page_header}>Login</h2>
                     <div className={styles.login_page_tab}>
                         <div
                             className={`${styles.tab_title} ${role === 'freelancer' ? styles.active : ''}`}

@@ -31,7 +31,7 @@ const JobCard = (props) => {
         <div className={styles.job_card}>
             <div className={styles.job_card_wrapper}>
                 <div className={styles.job_card_info_wrapper}>
-                    <h1 className={styles.job_card_title}>{title}</h1>
+                    <h2 className={styles.job_card_title}>{title}</h2>
                     <p className={styles.job_card_description}>{description}</p>
                     <div className={styles.job_info_container}>
                         <div className={styles.job_info_wrapper}>

@@ -30,7 +30,7 @@ Modal.Header = (props) => {
     if (isDefault) {
         return (
             <div className={styles.modal_header_wrapper}>
-                <h1 className={styles.modal_header_title}>{title}</h1>
+                <h2 className={styles.modal_header_title}>{title}</h2>
                 <div
                     className={styles.modal_header_icon}
                     onClick={closeModal}
